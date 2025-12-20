@@ -1,4 +1,39 @@
-<button onclick="goHome()">🏠 Home</button>
+let cart = [];
+let total = 0;
+
+function addToCart(name, price) {
+  cart.push({ name, price });
+  total += price;
+  updateCart();
+}
+
+function removeFromCart(index) {
+  total -= cart[index].price;
+  cart.splice(index, 1);
+  updateCart();
+}
+
+function updateCart() {
+  const cartList = document.getElementById("cart");
+  cartList.innerHTML = "";
+
+  cart.forEach((item, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      ${item.name} - $${item.price}
+      <button onclick="removeFromCart(${index})">Remove</button>
+    `;
+    cartList.appendChild(li);
+  });
+
+  document.getElementById("total").innerText = total;
+}
+
+// ✅ HOME BUTTON (keeps cart)
+function goHome() {
+  document.getElementById("home").scrollIntoView({ behavior: "smooth" });
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
